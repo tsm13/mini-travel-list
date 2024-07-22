@@ -1,6 +1,7 @@
 interface Props {
   children: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
+  dispatchType?: string;
 }
 
 export default function Button({ children, onClick }: Props) {

@@ -4,22 +4,30 @@ import List from "./components/List";
 import AddItem from "./components/AddItem";
 import { useContent } from "./context/ContentContext";
 import ToggleButton from "./components/ToggleButton";
-import { useLocalStorageState } from "./hooks/useLocalStorage";
+import Button from "./components/Button";
 
 function App() {
-  const { list, listA, listB } = useContent();
+  const { list, dispatch } = useContent();
+  console.log(list);
+  const toOrganizeList = list.filter((item) => !item.isReady);
+  const readyList = list.filter((item) => item.isReady);
 
   return (
     <div className="grid grid-flow-col gap-4">
       <div>
         <AddItem />
         <Box title="Organize">
-          <List list={list} />
+          <List list={toOrganizeList} />
         </Box>
       </div>
-      <ToggleButton />
+      <Button onClick={() => dispatch({ type: "toggleAll" })}>
+        Toggle All Ready
+      </Button>
+      <Button onClick={() => dispatch({ type: "reset" })}>
+        Reset All Ready
+      </Button>
       <Box title="Ready">
-        <List list={listB} />
+        <List list={readyList} />
       </Box>
     </div>
   );

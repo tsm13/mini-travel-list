@@ -2,12 +2,35 @@ import { createContext, useContext, useReducer } from "react";
 import { useLocalStorageState } from "../hooks/useLocalStorage";
 
 interface IContext {
-  [key: string]: { object: string; quantity?: number; isReady: boolean }[] | [];
+  //[key: string]: { object: string; quantity?: number; isReady: boolean }[] | [];
+  list:
+    | {
+        itemName: string;
+        quantity: number;
+        isReady: boolean;
+      }[]
+    | [];
 }
 
 const initialState: IContext = {
-  listA: [],
-  listB: [],
+  list: [
+    {
+      itemName: "glasses",
+      quantity: 1,
+      isReady: false,
+    },
+    {
+      itemName: "apples",
+      quantity: 3,
+      isReady: false,
+    },
+    {
+      itemName: "pears",
+      quantity: 3,
+      isReady: true,
+    },
+  ],
+  // listB: [],
   whatIsThereAtA: [],
   whatIsThereAtB: [],
 };
@@ -17,18 +40,18 @@ function reducer(state, action) {
     case "addItem":
       return {
         ...state,
-        listA: [
-          ...state.listA,
+        list: [
+          ...state.list,
           {
             ...action.payload,
-            object: action.payload.object,
+            itemName: action.payload.object,
           },
         ],
       };
 
     case "changeItemQuantity":
       [
-        ...state.listA.filter((obj) => {
+        ...state.list.filter((obj) => {
           return obj.object === action.payload.object;
         }),
         action.payload,
@@ -48,83 +71,154 @@ function reducer(state, action) {
       };
 
     case "toggleAll":
-      console.log(state);
-      if (state.listA.length > 0)
-        return {
-          ...state,
-          listB: [
-            ...state.listA.map((obj) => {
-              return {
-                ...obj,
-                isReady: true,
-              };
-            }),
-          ],
-          listA: [],
-        };
-      else
-        return {
-          ...state,
-          listA: [
-            ...state.listB.map((obj) => {
-              return {
-                ...obj,
-                isReady: false,
-              };
-            }),
-          ],
-          listB: [],
-        };
+      // if (state.listA.length > 0)
+      //   return {
+      //     ...state,
+      //     listB: [
+      //       ...state.listA.map((obj) => {
+      //         return {
+      //           ...obj,
+      //           isReady: true,
+      //         };
+      //       }),
+      //     ],
+      //     listA: [],
+      //   };
+      // else
+      //   return {
+      //     ...state,
+      //     listA: [
+      //       ...state.listB.map((obj) => {
+      //         return {
+      //           ...obj,
+      //           isReady: false,
+      //         };
+      //       }),
+      //     ],
+      //     listB: [],
+      //   };
+
+      return {
+        ...state,
+        list: state.list.map((item) => {
+          return {
+            ...item,
+            isReady: true,
+          };
+        }),
+      };
+
+    case "reset":
+      return {
+        ...state,
+        list: state.list.map((item) => {
+          return {
+            ...item,
+            isReady: false,
+          };
+        }),
+      };
 
     case "moveItem":
-      if (action.payload.isReady)
+      //     if (!action.payload.isReady)
+      //       return {
+      //         ...state,
+      //         listA: [
+      //           ...state.listA.filter((obj) => {
+      //             return obj.object !== action.payload.object;
+      //           }),
+      //         ],
+      //         listB: [
+      //           ...state.listB,
+      //           {
+      //             ...action.payload,
+      //             isReady: true,
+      //           },
+      //         ],
+      //       };
+      //     else
+      //       return {
+      //         ...state,
+      //         listB: [
+      //           ...state.listB.filter((obj) => {
+      //             return obj.object !== action.payload.object;
+      //           }),
+      //         ],
+      //         listA: [
+      //           ...state.listA,
+      //           {
+      //             ...action.payload,
+      //             isReady: false,
+      //           },
+      //         ],
+      //       };
+      // }
+      if (!action.payload.isReady) {
+        const obj = state.list.find(
+          (o) => o.itemName === action.payload.itemName
+        );
+
         return {
           ...state,
-          listB: [
-            ...state.listB.filter((obj) => {
-              return obj.object !== action.payload.object;
-            }),
-          ],
-          listA: [
-            ...state.listA,
-            {
-              ...action.payload,
-              isReady: false,
-            },
+          list: [
+            ...state.list
+              .map((o, i) => {
+                o.itemName === obj.itemName ? o.isReady === true : false;
+              })
+              .filter((item) => {
+                return item.itemName !== action.payload.itemName;
+              }),
           ],
         };
-      else
-        return {
-          ...state,
-          listA: [
-            ...state.listA.filter((obj) => {
-              return obj.object !== action.payload.object;
-            }),
-          ],
-          listB: [
-            ...state.listB,
-            {
-              ...action.payload,
-              isReady: true,
-            },
-          ],
-        };
+
+        // return {
+        //   ...state,
+        //   list: [
+        //     ...state.list.filter((obj) => {
+        //       return obj.object !== action.payload.object;
+        //     }),
+        //     [
+        //       ...state.list,
+        //       {
+        //         ...action.payload,
+        //         isReady: true,
+        //       },
+        //     ],
+        //   ],
+        //   };
+        // } else
+        //   return {
+        //     ...state,
+        //     listB: [
+        //       ...state.listB.filter((obj) => {
+        //         return obj.object !== action.payload.object;
+        //       }),
+        //     ],
+        //     listA: [
+        //       ...state.listA,
+        //       {
+        //         ...action.payload,
+        //         isReady: false,
+        //       },
+        //     ],
+        //   };
+      }
   }
 }
 
 const ContentContext = createContext([]);
 
 function ContentProvider({ children }) {
-  const [{ listA, listB, whatIsThereAtA, whatIsThereAtB }, dispatch] =
+  const [{ list, listA, listB, whatIsThereAtA, whatIsThereAtB }, dispatch] =
     useReducer(reducer, initialState);
-  const [list, setList] = useLocalStorageState([], "list");
+  const [list2, setList] = useLocalStorageState([], "list");
   return (
     <ContentContext.Provider
       value={{
         list,
         setList,
-        listA,
-        listB,
+        // listA,
+        // listB,
         whatIsThereAtA,
         whatIsThereAtB,
         dispatch,

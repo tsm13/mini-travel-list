@@ -5,7 +5,7 @@ import { useContent } from "../context/ContentContext";
 type Props = {};
 
 export default function ToggleButton({}: Props) {
-  const { dispatch } = useContent();
+  const { dispatch, list } = useContent();
   return (
     <Button onClick={() => dispatch({ type: "toggleAll" })}>Toggle All</Button>
   );
