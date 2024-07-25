@@ -1,17 +1,37 @@
 import { useContent } from "../context/ContentContext";
-import { useLocalStorageState } from "../hooks/useLocalStorage";
+import { Item } from "../interfaces/item";
 
-type Props = {};
+export default function ListItem({ item }: { item: Item }) {
+  const { setList, list, dispatch } = useContent();
 
-export default function ListItem({ item }: Props) {
-  const { list, setList } = useContent();
+  const updateItemQuantity = (item: Item, op: number) => {
+    const filteredItem = list
+      .filter((listItem) => listItem.itemName === item.itemName)
+      .at(0);
+
+    if (filteredItem.quantity === 1 && op === -1) {
+      return setList(list.filter((item) => item !== filteredItem));
+    }
+
+    setList(
+      list.map((listItem) =>
+        listItem.itemName === filteredItem.itemName
+          ? { ...listItem, quantity: listItem.quantity + op }
+          : listItem
+      )
+    );
+  };
 
   const handleIncreaseQuantity = () => {
     dispatch({
       type: "changeItemQuantity",
-      payload: { ...item, quantity: item.quantity++ },
+      payload: {
+        ...item,
+        //quantity: item.quantity++
+        quantity: 1,
+      },
     });
-    updateItem(item);
+    updateItemQuantity(item, 1);
   };
 
   const handleDecreaseQuantity = () => {
@@ -19,39 +39,39 @@ export default function ListItem({ item }: Props) {
       type: "changeItemQuantity",
       payload: {
         ...item,
-        quantity: item.quantity > 0 && item.quantity--,
+        // quantity: item.quantity > 0 && item.quantity--,
+        quantity: -1,
       },
     });
-    updateItem(item);
-    if (item.quantity <= 0) removeItem(item);
+
+    updateItemQuantity(item, -1);
   };
 
-  const updateItem = (item) => {
-    const items = JSON.parse(localStorage.getItem("list"));
-    const updatedList = items.map((listItem) => {
-      listItem.quantity = item.quantity;
-      return listItem;
-    });
-    setList(updatedList);
-    console.log(list);
+  const handleMoveItem = () => {
+    dispatch({ type: "moveItem", payload: item });
+
+    const movedItem = list
+      .filter((itemToBeMoved) => itemToBeMoved.itemName === item.itemName)
+      .map((item) => {
+        return {
+          ...item,
+          isReady: !item.isReady,
+        };
+      });
+
+    setList((list) => [
+      ...list.filter((listItem) => {
+        return listItem.itemName !== item.itemName;
+      }),
+      ...movedItem,
+    ]);
   };
 
-  const removeItem = (item) => {
-    const items = JSON.parse(localStorage.getItem("list"));
-    const filteredList = items.filter(
-      (listItem) => listItem.object !== item.object
-    );
-    setList(filteredList);
-  };
-
-  const { dispatch } = useContent();
   if (item.quantity <= 0) return;
+
   return (
     <li className="flex justify-between hover:bg-primary-50">
-      <div
-        className="flex justify-between"
-        onClick={() => dispatch({ type: "moveItem", payload: item })}
-      >
+      <div className="flex justify-between" onClick={handleMoveItem}>
         <span>{item.itemName}</span>
         <span>{item.quantity}</span>
       </div>

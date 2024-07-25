@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { useContent } from "../context/ContentContext";
-import Button from "./Button";
-import { useLocalStorageState } from "../hooks/useLocalStorage";
 
-type Props = {};
-
-export default function AddItem({}: Props) {
+export default function AddItem() {
   const { dispatch, setList } = useContent();
   const [inputValue, setInputValue] = useState("");
 
@@ -13,13 +9,13 @@ export default function AddItem({}: Props) {
     e.preventDefault();
     if (inputValue.length < 1) return;
     const newItem = {
-      object: inputValue,
+      itemName: inputValue,
       quantity: 1,
       isReady: false,
     };
     dispatch({ type: "addItem", payload: newItem });
-    setInputValue("");
     setList((list) => [...list, newItem]);
+    setInputValue("");
   };
 
   return (
