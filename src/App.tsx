@@ -2,14 +2,15 @@ import "./App.css";
 import Box from "./components/Box";
 import List from "./components/List";
 import AddItem from "./components/AddItem";
-import { useContent } from "./context/ContentContext";
+import { useContent } from "./context/ListContext";
 import Button from "./components/Button";
+import { ListActionType } from "./enums/listActionType";
 
 function App() {
   const { listToOrganize, listReady, dispatch, setList } = useContent();
 
   const handleToggleAllReady = () => {
-    dispatch({ type: "toggleAllReady" });
+    dispatch({ type: ListActionType.TOGGLE_READY });
     setList((list) =>
       list.map((listItem) => {
         return { ...listItem, isReady: true };
@@ -18,7 +19,7 @@ function App() {
   };
 
   const handleResetAllReady = () => {
-    dispatch({ type: "resetAllReady" });
+    dispatch({ type: ListActionType.RESET_READY });
     setList((list) =>
       list.map((listItem) => {
         return { ...listItem, isReady: false };
@@ -27,22 +28,23 @@ function App() {
   };
 
   const handleClearList = () => {
-    dispatch({ type: "clearList" });
+    dispatch({ type: ListActionKind.CLEAR_LIST });
     setList((list) => list.slice(0, 0));
   };
 
   return (
     <div className="grid grid-flow-col gap-4">
       <div>
-        <AddItem />
         <Box title="Organize">
+          <AddItem />
           <List list={listToOrganize} />
+          <Button onClick={handleToggleAllReady}>Toggle All Ready</Button>
         </Box>
       </div>
-      <Button onClick={handleToggleAllReady}>Toggle All Ready</Button>
-      <Button onClick={handleResetAllReady}>Reset All Ready</Button>
+
       <Box title="Ready">
         <List list={listReady} />
+        <Button onClick={handleResetAllReady}>Reset All Ready</Button>
       </Box>
       <Button onClick={handleClearList}>Clear list</Button>
     </div>

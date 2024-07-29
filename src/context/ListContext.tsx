@@ -1,28 +1,43 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, Dispatch, useContext, useReducer } from "react";
 import { useLocalStorageState } from "../hooks/useLocalStorage";
 import { Item } from "../interfaces/item";
+import { ListActionType } from "../enums/listActionType";
 
-interface IContext {
+interface Lists {
   listToOrganize: Item[] | [];
   listReady: Item[] | [];
 }
 
-const initialState: IContext = {
-  listToOrganize: localStorage.getItem("list")
-    ? JSON.parse(localStorage.getItem("list")!).filter(
-        (item: Item) => !item.isReady
-      )
-    : [],
-  listReady: localStorage.getItem("list")
-    ? JSON.parse(localStorage.getItem("list")!).filter(
-        (item: Item) => item.isReady
-      )
-    : [],
+const initialState: Lists = {
+  listToOrganize:
+    JSON.parse(localStorage.getItem("list")!)?.filter(
+      (item: Item) => !item.isReady
+    ) || [],
+  listReady:
+    JSON.parse(localStorage.getItem("list")!)?.filter(
+      (item: Item) => item.isReady
+    ) || [],
 };
 
-function reducer(state, action) {
+type Actions =
+  | {
+      type:
+        | ListActionType.ADD_ITEM
+        | ListActionType.CHANGE_QUANTITY
+        | ListActionType.MOVE_ITEM
+        | ListActionType.REMOVE_ITEM;
+      payload: Item;
+    }
+  | {
+      type:
+        | ListActionType.TOGGLE_READY
+        | ListActionType.RESET_READY
+        | ListActionType.CLEAR_LIST;
+    };
+
+function reducer(state: Lists, action: Actions) {
   switch (action.type) {
-    case "addItem":
+    case ListActionType.ADD_ITEM:
       return {
         ...state,
         listToOrganize: [
@@ -34,17 +49,17 @@ function reducer(state, action) {
         ],
       };
 
-    case "changeItemQuantity":
+    case ListActionType.CHANGE_QUANTITY:
       return {
         ...state,
-        listToOrganize: state.listToOrganize.map((item) => {
-          return item.itemName === action.payload.itemName
+        listToOrganize: state.listToOrganize.map((item) =>
+          item.itemName === action.payload.itemName
             ? { ...item, quantity: item.quantity + action.payload.quantity }
-            : item;
-        }),
+            : item
+        ),
       };
 
-    case "toggleAllReady":
+    case ListActionType.TOGGLE_READY:
       if (state.listToOrganize.length > 0)
         return {
           ...state,
@@ -61,7 +76,7 @@ function reducer(state, action) {
         };
       else return state;
 
-    case "resetAllReady":
+    case ListActionType.RESET_READY:
       return {
         ...state,
         listToOrganize: [
@@ -76,7 +91,7 @@ function reducer(state, action) {
         listReady: [],
       };
 
-    case "moveItem":
+    case ListActionType.MOVE_ITEM:
       if (!action.payload.isReady)
         return {
           ...state,
@@ -95,7 +110,7 @@ function reducer(state, action) {
         return {
           ...state,
           listReady: state.listReady.filter(
-            (obj) => obj.itemName !== action.payload.itemName
+            (i) => i.itemName !== action.payload.itemName
           ),
           listToOrganize: [
             ...state.listToOrganize,
@@ -106,7 +121,15 @@ function reducer(state, action) {
           ],
         };
 
-    case "clearList":
+    case ListActionType.REMOVE_ITEM:
+      return {
+        ...state,
+        listToOrganize: state.listToOrganize.filter(
+          (i) => i.itemName !== action.payload.itemName
+        ),
+      };
+
+    case ListActionType.CLEAR_LIST:
       return { listToOrganize: [], listReady: [] };
 
     default:
@@ -114,21 +137,27 @@ function reducer(state, action) {
   }
 }
 
-const ContentContext = createContext([]);
+interface ContextProps {
+  listToOrganize: Item[];
+  listReady: Item[];
+  dispatch: Dispatch<Actions>;
+  list: Array<Item>;
+  setList: Dispatch<Item[]>;
+}
 
-function ContentProvider({ children }) {
-  const [
-    { listToOrganize, listReady, whatIsThereAtA, whatIsThereAtB },
-    dispatch,
-  ] = useReducer(reducer, initialState);
-  const [list, setList] = useLocalStorageState([], "list");
+const ContentContext = createContext<ContextProps>({} as ContextProps);
+
+function ContentProvider({ children }: { children: React.ReactElement }) {
+  const [{ listToOrganize, listReady }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
+  const [list, setList] = useLocalStorageState([] as Item[], "list");
   return (
     <ContentContext.Provider
       value={{
         listToOrganize,
         listReady,
-        whatIsThereAtA,
-        whatIsThereAtB,
         dispatch,
         list,
         setList,

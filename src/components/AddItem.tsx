@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useContent } from "../context/ContentContext";
+import { useContent } from "../context/ListContext";
 
 export default function AddItem() {
   const { dispatch, setList } = useContent();
@@ -21,14 +21,16 @@ export default function AddItem() {
   return (
     <div className="flex flex-col gap-4">
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-        ></input>
-        <button className="bg-accent-500 hover:bg-accent-700 rounded-lg px-3 py-2">
-          Add Item
-        </button>
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          ></input>
+          <button className="bg-accent-500 hover:bg-accent-700 rounded-lg px-3 py-2 text-sm">
+            Add
+          </button>
+        </div>
       </form>
     </div>
   );
