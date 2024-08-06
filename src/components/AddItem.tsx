@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useContent } from "../context/ListContext";
+import { ListActionType } from "../enums/listActionType";
+import { Item } from "../interfaces/item";
+import Button from "./Button";
 
 export default function AddItem() {
   const { dispatch, setList } = useContent();
   const [inputValue, setInputValue] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (inputValue.length < 1) return;
     const newItem = {
@@ -13,25 +16,23 @@ export default function AddItem() {
       quantity: 1,
       isReady: false,
     };
-    dispatch({ type: "addItem", payload: newItem });
-    setList((list) => [...list, newItem]);
+    dispatch({ type: ListActionType.ADD_ITEM, payload: newItem });
+    setList((list: Item[]) => [...list, newItem]);
     setInputValue("");
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <form onSubmit={handleSubmit}>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          ></input>
-          <button className="bg-accent-500 hover:bg-accent-700 rounded-lg px-3 py-2 text-sm">
-            Add
-          </button>
-        </div>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <div className="flex gap-2">
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          className="rounded bg-slate-700 px-2 h-7"
+          placeholder="Enter item name here"
+        ></input>
+        <Button type="small">Add</Button>
+      </div>
+    </form>
   );
 }

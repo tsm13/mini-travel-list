@@ -122,12 +122,20 @@ function reducer(state: Lists, action: Actions) {
         };
 
     case ListActionType.REMOVE_ITEM:
-      return {
-        ...state,
-        listToOrganize: state.listToOrganize.filter(
-          (i) => i.itemName !== action.payload.itemName
-        ),
-      };
+      if (state.listToOrganize.includes(action.payload as never))
+        return {
+          ...state,
+          listToOrganize: state.listToOrganize.filter(
+            (i) => i.itemName !== action.payload.itemName
+          ),
+        };
+      else
+        return {
+          ...state,
+          listReady: state.listReady.filter(
+            (i) => i.itemName !== action.payload.itemName
+          ),
+        };
 
     case ListActionType.CLEAR_LIST:
       return { listToOrganize: [], listReady: [] };
@@ -141,8 +149,10 @@ interface ContextProps {
   listToOrganize: Item[];
   listReady: Item[];
   dispatch: Dispatch<Actions>;
-  list: Array<Item>;
-  setList: Dispatch<Item[]>;
+  list: Item[];
+  /// REVIEW: here
+  // | Dispatch<Item[]>
+  setList: (item: unknown) => void;
 }
 
 const ContentContext = createContext<ContextProps>({} as ContextProps);

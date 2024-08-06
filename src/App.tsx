@@ -1,17 +1,16 @@
-import "./App.css";
 import Box from "./components/Box";
 import List from "./components/List";
-import AddItem from "./components/AddItem";
 import { useContent } from "./context/ListContext";
 import Button from "./components/Button";
 import { ListActionType } from "./enums/listActionType";
+import { Item } from "./interfaces/item";
 
 function App() {
   const { listToOrganize, listReady, dispatch, setList } = useContent();
 
   const handleToggleAllReady = () => {
     dispatch({ type: ListActionType.TOGGLE_READY });
-    setList((list) =>
+    setList((list: Item[]) =>
       list.map((listItem) => {
         return { ...listItem, isReady: true };
       })
@@ -20,7 +19,7 @@ function App() {
 
   const handleResetAllReady = () => {
     dispatch({ type: ListActionType.RESET_READY });
-    setList((list) =>
+    setList((list: Item[]) =>
       list.map((listItem) => {
         return { ...listItem, isReady: false };
       })
@@ -28,26 +27,32 @@ function App() {
   };
 
   const handleClearList = () => {
-    dispatch({ type: ListActionKind.CLEAR_LIST });
-    setList((list) => list.slice(0, 0));
+    dispatch({ type: ListActionType.CLEAR_LIST });
+    setList((list: Item[]) => list.slice(0, 0));
   };
 
   return (
-    <div className="grid grid-flow-col gap-4">
-      <div>
+    <main className="grid h-full">
+      <div className="py-8 grid grid-cols-2 md:grid-cols-6  gap-x-16 gap-y-12">
         <Box title="Organize">
-          <AddItem />
           <List list={listToOrganize} />
-          <Button onClick={handleToggleAllReady}>Toggle All Ready</Button>
+          <Button onClick={handleToggleAllReady} type="medium">
+            Toggle All Ready
+          </Button>
         </Box>
-      </div>
 
-      <Box title="Ready">
-        <List list={listReady} />
-        <Button onClick={handleResetAllReady}>Reset All Ready</Button>
-      </Box>
-      <Button onClick={handleClearList}>Clear list</Button>
-    </div>
+        <Box title="Ready">
+          <List list={listReady} />
+          <Button onClick={handleResetAllReady} type="medium">
+            Reset All Ready
+          </Button>
+        </Box>
+
+        <Button onClick={handleClearList} type="large">
+          Clear list
+        </Button>
+      </div>
+    </main>
   );
 }
 

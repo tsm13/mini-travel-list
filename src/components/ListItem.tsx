@@ -1,6 +1,7 @@
 import { useContent } from "../context/ListContext";
 import { ListActionType } from "../enums/listActionType";
 import { Item } from "../interfaces/item";
+import SmallButton from "./SmallButton";
 
 export default function ListItem({ item }: { item: Item }) {
   const { setList, list, dispatch } = useContent();
@@ -10,9 +11,9 @@ export default function ListItem({ item }: { item: Item }) {
   };
 
   const updateItemQuantity = (item: Item, op: number) => {
-    const filteredItem: Item = list
-      .filter((listItem) => listItem.itemName === item.itemName)
-      .at(0);
+    const filteredItem: Item = list.filter(
+      (listItem) => listItem.itemName === item.itemName
+    )[0];
 
     if (filteredItem.quantity === 1 && op === -1) {
       return removeItem(filteredItem);
@@ -61,7 +62,7 @@ export default function ListItem({ item }: { item: Item }) {
         };
       });
 
-    setList((list) => [
+    setList((list: Item[]) => [
       ...list.filter((listItem) => {
         return listItem.itemName !== item.itemName;
       }),
@@ -77,18 +78,23 @@ export default function ListItem({ item }: { item: Item }) {
   if (item.quantity <= 0) return;
 
   return (
-    <li className="flex justify-between hover:bg-primary-50">
-      <div className="flex grow justify-between" onClick={handleMoveItem}>
+    <li className="flex justify-between py-2.5 px-1 hover:bg-slate-400">
+      <div className="flex grow " onClick={handleMoveItem}>
         <span>{item.itemName}</span>
-        <span>{item.quantity}</span>
       </div>
-      {item.isReady === false && (
-        <>
-          <button onClick={handleIncreaseQuantity}>+</button>
-          <button onClick={handleDecreaseQuantity}>-</button>
-          <button onClick={handleRemoveItem}>&times;</button>
-        </>
-      )}
+
+      <div className="flex justify-between gap-2">
+        {item.isReady === false && (
+          <>
+            <SmallButton onClickFn={handleIncreaseQuantity}>+</SmallButton>
+            <span>{item.quantity}</span>
+            <SmallButton onClickFn={handleDecreaseQuantity}>-</SmallButton>
+          </>
+        )}
+        <SmallButton type="del" onClickFn={handleRemoveItem}>
+          &times;
+        </SmallButton>
+      </div>
     </li>
   );
 }
