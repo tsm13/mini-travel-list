@@ -31,7 +31,7 @@ export default function AddItem() {
           className="rounded bg-slate-700 px-2 h-7"
           placeholder="Enter item name here"
         ></input>
-        <Button type="small">Add</Button>
+        <Button size="small">Add</Button>
       </div>
     </form>
   );

@@ -25,7 +25,8 @@ type Actions =
         | ListActionType.ADD_ITEM
         | ListActionType.CHANGE_QUANTITY
         | ListActionType.MOVE_ITEM
-        | ListActionType.REMOVE_ITEM;
+        | ListActionType.REMOVE_ITEM
+        | ListActionType.IMPORT_LIST;
       payload: Item;
     }
   | {
@@ -136,6 +137,13 @@ function reducer(state: Lists, action: Actions) {
             (i) => i.itemName !== action.payload.itemName
           ),
         };
+
+    case ListActionType.IMPORT_LIST:
+      return {
+        ...state,
+        listToOrganize: action.payload.filter((item) => !item.isReady),
+        listReady: action.payload.filter((item) => item.isReady),
+      };
 
     case ListActionType.CLEAR_LIST:
       return { listToOrganize: [], listReady: [] };

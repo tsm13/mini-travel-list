@@ -6,4 +6,5 @@ export enum ListActionType {
   MOVE_ITEM = "moveItem",
   REMOVE_ITEM = "removeItem",
   CLEAR_LIST = "clearList",
+  IMPORT_LIST = "importList",
 }
