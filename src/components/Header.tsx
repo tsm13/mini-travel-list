@@ -1,69 +1,20 @@
-import { useState } from "react";
-import { useContent } from "../context/ListContext";
-import { ListActionType } from "../enums/listActionType";
-import { Item } from "../interfaces/item";
-import Button from "./Button";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { IconContext } from "react-icons";
+import Navigation from "./Navigation";
 
 export default function Header() {
-  const { dispatch, list, setList } = useContent();
-  const [file, setFile] = useState();
-
-  const handleClearList = () => {
-    dispatch({ type: ListActionType.CLEAR_LIST });
-    setList((list: Item[]) => list.slice(0, 0));
-  };
-
-  const handleExportToJSON = () => {
-    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
-      JSON.stringify(list)
-    )}`;
-    const link = document.createElement("a");
-    link.href = jsonString;
-    link.download = "list.json";
-
-    link.click();
-  };
-
-  async function parseJsonFile(file) {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.onload = (event) => resolve(JSON.parse(event.target.result));
-      fileReader.onerror = (error) => reject(error);
-      fileReader.readAsText(file);
-    });
-  }
-
-  const handleImportJSON = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("fileName", file.name);
-
-    const object = await parseJsonFile(file);
-    setList(object);
-
-    dispatch({ type: ListActionType.IMPORT_LIST, payload: object });
-  };
-
-  const handleChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-
   return (
-    <header className="bg-slate-500 flex items-center min-h-20 justify-around flex-wrap">
-      <form className="flex" onSubmit={handleImportJSON}>
-        <input type="file" accept=".json" onChange={handleChange} />
-        <Button size="large">Import list</Button>
-      </form>
-
-      <Button onClick={handleExportToJSON} size="large">
-        Export list
-      </Button>
-
-      <Button onClick={handleClearList} size="large">
-        Clear list
-      </Button>
+    <header className="bg-slate-500 px-6 flex items-center justify-end md:justify-around border-b-[1px]">
+      <div className="hidden md:flex md:flex-1 md:justify-center">
+        <Navigation />
+      </div>
+      <IconContext.Provider
+        value={{ color: "white", size: "2em", className: "md:hidden min-h-16" }}
+      >
+        <button>
+          <RxHamburgerMenu />
+        </button>
+      </IconContext.Provider>
     </header>
   );
 }

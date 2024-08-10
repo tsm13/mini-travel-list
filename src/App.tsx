@@ -31,7 +31,7 @@ function App() {
     <>
       <Header />
       <main className="grid place-content-center text-sm md:px-8">
-        <div className="py-8 grid grid-cols-2 md:grid-cols-6  gap-x-16 gap-y-12">
+        <div className="py-8 grid grid-cols-2 md:grid-cols-6 gap-x-16 gap-y-12">
           <Box title="Organize">
             <List list={listToOrganize} />
             <Button onClick={handleToggleAllReady} size="medium">
