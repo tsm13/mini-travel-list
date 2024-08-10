@@ -23,12 +23,12 @@ export default function AddItem() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex gap-2">
+      <div className="flex justify-between gap-4">
         <input
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          className="rounded bg-slate-700 px-2 h-7"
+          className="rounded bg-slate-700 px-3 h-8 flex-1 focus:outline-none focus:ring focus:ring-accent-600 focus:ring-offset-1"
           placeholder="Enter item name here"
         ></input>
         <Button size="small">Add</Button>

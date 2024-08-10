@@ -1,8 +1,8 @@
 import AddItem from "./AddItem";
-import Handle from "./layout/Handle";
-import Lower from "./layout/Lower";
-import Upper from "./layout/Upper";
-import Wheel from "./layout/Wheel";
+import Handle from "./suitcase-layout/Handle";
+import Lower from "./suitcase-layout/Lower";
+import Upper from "./suitcase-layout/Upper";
+import Wheel from "./suitcase-layout/Wheel";
 import TotalItemsReady from "./TotalItemsReady";
 
 export default function Box({
@@ -13,9 +13,9 @@ export default function Box({
   children: React.ReactNode;
 }) {
   return (
-    <div className="col-span-2 md:col-span-3 flex flex-col">
+    <div className="col-span-2 md:col-span-3 flex flex-col relative box">
       <Handle title={title} />
-      <div className="bg-slate-600 rounded-xl px-6 py-4 min-h-[500px] max-w-[340px] grid overflow-x-hidden">
+      <div className="bg-slate-600 rounded-xl px-6 py-4 min-h-[500px] w-[340px] grid overflow-x-hidden">
         <div className="flex flex-col gap-4">
           <Upper>
             {title === "Organize" ? <AddItem /> : <TotalItemsReady />}

@@ -1,32 +1,28 @@
 interface Props {
   children: React.ReactNode;
   onClick?: () => void;
-  size: "small" | "medium" | "large";
+  size: "small" | "medium" | "large" | "smallBlack" | "smallRed";
 }
 
 export default function Button({ children, onClick, size }: Props) {
   const base =
-    "inline-block text-base bg-accent-600 hover:bg-accent-700  font-semibold uppercase tracking-wide text-stone-800 transition-colors duration-300 focus:bg-accent-700 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed";
+    "text-base bg-accent-600 hover:bg-accent-500 font-semibold uppercase tracking-wide text-stone-800 transition-colors duration-300 disabled:cursor-not-allowed rounded-lg focus:bg-accent-500 focus:outline-none focus:ring focus:ring-accent-600 focus:ring-offset-1";
 
-  // add:
-  // className="bg-accent-600 hover:bg-accent-700 rounded-lg px-3 text-sm
+  const baseSmall =
+    " text-slate-300 rounded-full w-6 h-6 flex place-content-center hover: active:translate-y-0.5 transition-transform duration-400";
 
   const style = {
-    small: base + " px-2 py-2 text-xs",
-    medium: base + "",
-    large:
-      base +
-      " w-full md:place-self-start md:row-start-2 md:col-start-2 md:col-span-4 col-span-2",
-    round: size + " px-2.5 py-1 md:px-3.5 md:py-2 text-sm",
+    small: base + " px-2 py-1.5 text-sm font-bold",
+    medium: base + " py-2.5 px-4 place-self-center text-sm md:text-base",
+    large: base + " py-3 px-5 text-sm md:text-base",
+    smallBlack: baseSmall + " font-normal bg-slate-800",
+    smallRed:
+      baseSmall +
+      " text-slate-950 text-sm bg-red-500 active:bg-red-600 font-bold",
   };
 
   return (
-    <button
-      // className="bg-accent-600 hover:bg-accent-700 rounded-lg px-6 py-2 text-base "
-      className={`place-self-center inline-block text-base bg-accent-600 hover:bg-accent-500 font-semibold uppercase tracking-wide text-stone-800 transition-colors duration-300 focus:bg-accent-500 focus:outline-none focus:ring focus:ring-slate-400 focus:ring-offset-2 disabled:cursor-not-allowed ${style[size]}`}
-      // className={styles[type]}
-      onClick={onClick}
-    >
+    <button className={`${style[size]}`} onClick={onClick}>
       {children}
     </button>
   );

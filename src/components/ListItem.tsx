@@ -1,7 +1,7 @@
 import { useContent } from "../context/ListContext";
 import { ListActionType } from "../enums/listActionType";
 import { Item } from "../interfaces/item";
-import SmallButton from "./SmallButton";
+import Button from "./Button";
 
 export default function ListItem({ item }: { item: Item }) {
   const { setList, list, dispatch } = useContent();
@@ -78,22 +78,28 @@ export default function ListItem({ item }: { item: Item }) {
   if (item.quantity <= 0) return;
 
   return (
-    <li className="flex justify-between py-2.5 px-1 hover:bg-slate-400">
-      <div className="flex grow " onClick={handleMoveItem}>
-        <span>{item.itemName}</span>
+    <li className="flex justify-between py-3 px-1 hover:bg-slate-400/30 gap-2 items-center">
+      <div className="flex-1">
+        <div className="break-word" onClick={handleMoveItem}>
+          <span>{item.itemName}</span>
+        </div>
       </div>
 
-      <div className="flex justify-between gap-2">
+      <div className="flex justify-between gap-2 items-center">
         {item.isReady === false && (
           <>
-            <SmallButton onClickFn={handleIncreaseQuantity}>+</SmallButton>
+            <Button onClick={handleIncreaseQuantity} size="smallBlack">
+              +
+            </Button>
             <span>{item.quantity}</span>
-            <SmallButton onClickFn={handleDecreaseQuantity}>-</SmallButton>
+            <Button onClick={handleDecreaseQuantity} size="smallBlack">
+              -
+            </Button>
           </>
         )}
-        <SmallButton type="del" onClickFn={handleRemoveItem}>
+        <Button onClick={handleRemoveItem} size="smallRed">
           &times;
-        </SmallButton>
+        </Button>
       </div>
     </li>
   );
