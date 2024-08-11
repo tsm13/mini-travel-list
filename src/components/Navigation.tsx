@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useContent } from "../context/ListContext";
 import { ListActionType } from "../enums/listActionType";
-import Button from "./Button";
 import { Item } from "../interfaces/item";
 
-export default function Navigation() {
+export default function Navigation({
+  direction,
+}: {
+  direction: "horizontal" | "vertical";
+}) {
   const { dispatch, list, setList } = useContent();
   const [file, setFile] = useState();
 
@@ -51,7 +54,11 @@ export default function Navigation() {
   };
 
   return (
-    <ul className="flex uppercase justify-center items-center font-semibold text-lg gap-8">
+    <ul
+      className={`hidden md:flex md:flex-1 md:justify-center uppercase justify-center items-center font-semibold text-lg gap-8 ${
+        direction === "vertical" && "flex-col"
+      }`}
+    >
       <li className="hover:text-accent-400">
         <form
           className="flex items-center py-4 gap-4 font-base"
