@@ -1,13 +1,15 @@
-import Box from "./components/Box";
-import List from "./components/List";
+import { useState } from "react";
 import { useContent } from "./context/ListContext";
-import Button from "./components/Button";
 import { ListActionType } from "./enums/listActionType";
 import { Item } from "./interfaces/item";
+import Box from "./components/Box";
+import List from "./components/List";
+import Button from "./components/Button";
 import Header from "./components/Header";
 
 function App() {
   const { listToOrganize, listReady, dispatch, setList } = useContent();
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   const handleToggleAllReady = () => {
     dispatch({ type: ListActionType.TOGGLE_READY });
@@ -29,9 +31,13 @@ function App() {
 
   return (
     <>
-      <Header />
-      <main className="grid place-content-center text-sm md:px-8">
-        <div className="py-8 grid grid-cols-2 md:grid-cols-6 gap-x-16 gap-y-12">
+      <Header isNavOpen={isNavOpen} onSetIsNavOpen={setIsNavOpen} />
+      <main
+        className={`sm:px-8 grid place-content-center text-sm ${
+          isNavOpen && "blur-sm"
+        }`}
+      >
+        <div className="sm:grid-cols-6 py-8 grid grid-cols-2 gap-x-16 gap-y-12">
           <Box title="Organize">
             <List list={listToOrganize} />
             <Button onClick={handleToggleAllReady} size="medium">
@@ -46,6 +52,12 @@ function App() {
           </Box>
         </div>
       </main>
+      {isNavOpen && (
+        <div
+          className="backdrop"
+          onClick={() => setIsNavOpen(!isNavOpen)}
+        ></div>
+      )}
     </>
   );
 }

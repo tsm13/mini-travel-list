@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useContent } from "../context/ListContext";
 import { ListActionType } from "../enums/listActionType";
 import { Item } from "../interfaces/item";
+import { FaFileDownload, FaFileUpload, FaTrashAlt } from "react-icons/fa";
 
 export default function Navigation({
   direction,
+  setIsNavOpen,
 }: {
   direction: "horizontal" | "vertical";
+  setIsNavOpen: (isNavOpen: boolean) => void;
 }) {
   const { dispatch, list, setList } = useContent();
   const [file, setFile] = useState();
@@ -14,6 +17,7 @@ export default function Navigation({
   const handleClearList = () => {
     dispatch({ type: ListActionType.CLEAR_LIST });
     setList((list: Item[]) => list.slice(0, 0));
+    setIsNavOpen(false);
   };
 
   const handleExportToJSON = () => {
@@ -25,9 +29,10 @@ export default function Navigation({
     link.download = "list.json";
 
     link.click();
+    setIsNavOpen(false);
   };
 
-  async function parseJsonFile(file) {
+  async function parseJsonFile(file: File) {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.onload = (event) => resolve(JSON.parse(event.target.result));
@@ -38,6 +43,7 @@ export default function Navigation({
 
   const handleImportJSON = async (e) => {
     e.preventDefault();
+    if (!file) return;
 
     const formData = new FormData();
     formData.append("file", file);
@@ -47,31 +53,36 @@ export default function Navigation({
     setList(object);
 
     dispatch({ type: ListActionType.IMPORT_LIST, payload: object });
+    setIsNavOpen(false);
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFile(e.target.files[0]);
   };
 
   return (
     <ul
-      className={`hidden md:flex md:flex-1 md:justify-center uppercase justify-center items-center font-semibold text-lg gap-8 ${
-        direction === "vertical" && "flex-col"
+      className={`md:flex md:flex-1 md:justify-center md:gap-8 md:items-center text-lg uppercase font-semibold gap-6 ${
+        direction === "vertical"
+          ? "bg-slate-500 flex flex-col h-auto w-full absolute z-10 left-0 top-16 border-b-[1px] pb-6 pt-4 px-6"
+          : "hidden"
       }`}
     >
       <li className="hover:text-accent-400">
         <form
-          className="flex items-center py-4 gap-4 font-base"
+          className="md:py-4 md:flex-row md:gap-6 md:w-full flex flex-row-reverse justify-end items-center font-base gap-4 flex-wrap"
           onSubmit={handleImportJSON}
         >
           <input
             type="file"
             accept=".json"
             onChange={handleChange}
-            className="text-base font-normal"
+            className="text-base font-normal max-w-[200px]"
           />
           <button type="submit" className="uppercase">
-            Import list
+            <span className="flex items-center gap-2">
+              <FaFileDownload /> Load List
+            </span>
           </button>
         </form>
       </li>
@@ -81,7 +92,9 @@ export default function Navigation({
         onClick={handleExportToJSON}
         className="hover:text-accent-400"
       >
-        Export list
+        <span className="flex items-center gap-2">
+          <FaFileUpload /> Export list
+        </span>
       </li>
 
       <li
@@ -89,7 +102,10 @@ export default function Navigation({
         onClick={handleClearList}
         className="hover:text-accent-400"
       >
-        Clear list
+        <span className="flex items-center gap-2">
+          <FaTrashAlt />
+          Clear list
+        </span>
       </li>
     </ul>
   );

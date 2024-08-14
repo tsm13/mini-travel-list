@@ -1,25 +1,23 @@
-import { RxHamburgerMenu } from "react-icons/rx";
-import { IconContext } from "react-icons";
 import Navigation from "./Navigation";
-import { useState } from "react";
+import Hamburger from "./HamburgerButton";
 
-export default function Header() {
-  const [isNavOpen, setIsNavOpen] = useState(false);
-
+export default function Header({
+  isNavOpen,
+  onSetIsNavOpen,
+}: {
+  isNavOpen: boolean;
+  onSetIsNavOpen: (isNavOpen: boolean) => void;
+}) {
   return (
-    <header className="bg-slate-500 px-6 flex items-center justify-end md:justify-around border-b-[1px]">
-      <div className="hidden md:flex md:flex-1 md:justify-center">
-        <Navigation direction="horizontal" />
-      </div>
-      <IconContext.Provider
-        value={{ color: "white", size: "2em", className: "md:hidden min-h-16" }}
-      >
-        <button onClick={() => setIsNavOpen(!isNavOpen)}>
-          <RxHamburgerMenu />
-        </button>
-      </IconContext.Provider>
+    <header className="md:justify-around md:static md:z-0 bg-slate-500 sticky z-10 px-6 flex items-center justify-between border-b-[1px] top-0">
+      <h1 className="text-2xl font-bold uppercase">Travel List</h1>
+      <Navigation
+        direction={isNavOpen ? "vertical" : "horizontal"}
+        setIsNavOpen={onSetIsNavOpen}
+      />
+      <button onClick={() => onSetIsNavOpen(!isNavOpen)}>
+        <Hamburger isNavOpen={isNavOpen} />
+      </button>
     </header>
   );
 }
-
-// md:place-self-start md:row-start-2 md:col-start-2 md:col-span-4 col-span-2
