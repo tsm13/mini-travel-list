@@ -18,7 +18,7 @@ export default function Header({
 
   return (
     <header className="md:justify-around md:static md:z-0 bg-slate-500 text-slate-100 sticky z-10 px-6 flex items-center justify-between border-b-[1px] top-0 ">
-      <h1 className="text-2xl font-bold uppercase">Travel List</h1>
+      <h1 className="text-2xl font-bold uppercase">Mini Travel List</h1>
       <Navigation isNavOpen={isNavOpen} setIsNavOpen={onSetIsNavOpen} />
       <button onClick={() => onSetIsNavOpen(!isNavOpen)}>
         <Hamburger isNavOpen={isNavOpen} />
