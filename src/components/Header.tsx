@@ -1,5 +1,5 @@
 import Navigation from "./Navigation";
-import Hamburger from "./Hamburger";
+import Hamburger from "./ui/Hamburger";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { useEffect } from "react";
 

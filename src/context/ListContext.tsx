@@ -25,8 +25,7 @@ type Actions =
         | ListActionType.ADD_ITEM
         | ListActionType.CHANGE_QUANTITY
         | ListActionType.MOVE_ITEM
-        | ListActionType.REMOVE_ITEM
-        | ListActionType.IMPORT_LIST;
+        | ListActionType.REMOVE_ITEM;
       payload: Item;
     }
   | {
@@ -34,6 +33,10 @@ type Actions =
         | ListActionType.TOGGLE_READY
         | ListActionType.RESET_READY
         | ListActionType.CLEAR_LIST;
+    }
+  | {
+      type: ListActionType.IMPORT_LIST;
+      payload: Item[];
     };
 
 function reducer(state: Lists, action: Actions) {

@@ -1,8 +1,8 @@
 import AddItem from "./AddItem";
-import Handle from "./suitcase-layout/Handle";
-import Lower from "./suitcase-layout/Lower";
-import Upper from "./suitcase-layout/Upper";
-import Wheel from "./suitcase-layout/Wheel";
+import Handle from "./ui/suitcase/Handle";
+import Lower from "./ui/suitcase/Lower";
+import Upper from "./ui/suitcase/Upper";
+import Wheel from "./ui/suitcase/Wheel";
 import TotalItemsReady from "./TotalItemsReady";
 
 export default function Box({

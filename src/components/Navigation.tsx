@@ -12,13 +12,16 @@ export default function Navigation({
   setIsNavOpen: (isNavOpen: boolean) => void;
 }) {
   const { dispatch, list, setList } = useContent();
-  const [file, setFile] = useState();
+  const [file, setFile] = useState<File>();
 
   const handleClearList = () => {
     dispatch({ type: ListActionType.CLEAR_LIST });
     setList((list: Item[]) => list.slice(0, 0));
     setIsNavOpen(false);
   };
+
+  const dateNow = new Date();
+  console.log(dateNow.toString());
 
   const handleExportToJSON = () => {
     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
@@ -32,19 +35,19 @@ export default function Navigation({
     setIsNavOpen(false);
   };
 
-  async function parseJsonFile(file: File) {
+  async function parseJsonFile(file: File): Promise<Item[]> {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.onload = (event) => {
         if (!event.target) return;
-        resolve(JSON.parse(event.target.result) as string);
+        resolve(JSON.parse(event.target.result as string));
       };
       fileReader.onerror = (error) => reject(error);
       fileReader.readAsText(file);
     });
   }
 
-  const handleImportJSON = async (e) => {
+  const handleImportJSON = async (e: FormDataEvent) => {
     e.preventDefault();
     if (!file) return;
 
@@ -60,6 +63,7 @@ export default function Navigation({
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
     setFile(e.target.files[0]);
   };
 
@@ -74,7 +78,7 @@ export default function Navigation({
       <li className="hover:text-accent-400">
         <form
           className="md:py-4 md:flex-row md:gap-6 md:w-full flex flex-row-reverse justify-end items-center font-base gap-4 flex-wrap"
-          onSubmit={handleImportJSON}
+          onSubmit={() => handleImportJSON}
         >
           <input
             type="file"
