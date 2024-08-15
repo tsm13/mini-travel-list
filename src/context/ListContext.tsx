@@ -161,8 +161,6 @@ interface ContextProps {
   listReady: Item[];
   dispatch: Dispatch<Actions>;
   list: Item[];
-  /// REVIEW: here
-  // | Dispatch<Item[]>
   setList: (item: unknown) => void;
 }
 

@@ -20,16 +20,19 @@ export default function Navigation({
     setIsNavOpen(false);
   };
 
-  const dateNow = new Date();
-  console.log(dateNow.toString());
-
   const handleExportToJSON = () => {
     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
       JSON.stringify(list)
     )}`;
     const link = document.createElement("a");
     link.href = jsonString;
-    link.download = "list.json";
+
+    const dateNow = new Date()
+      .toISOString()
+      .replace("T", "_")
+      .replaceAll(":", "-")
+      .slice(5, 19);
+    link.download = `${dateNow}.json`;
 
     link.click();
     setIsNavOpen(false);
