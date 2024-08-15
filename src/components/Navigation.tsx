@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { FaFileDownload, FaFileUpload, FaTrashAlt } from "react-icons/fa";
 import { useContent } from "../context/ListContext";
 import { ListActionType } from "../enums/listActionType";
@@ -47,7 +47,7 @@ export default function Navigation({
     });
   }
 
-  const handleImportJSON = async (e: FormDataEvent) => {
+  const handleImportJSON = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file) return;
 
@@ -78,7 +78,7 @@ export default function Navigation({
       <li className="hover:text-accent-400">
         <form
           className="md:py-4 md:flex-row md:gap-6 md:w-full flex flex-row-reverse justify-end items-center font-base gap-4 flex-wrap"
-          onSubmit={() => handleImportJSON}
+          onSubmit={(e) => handleImportJSON(e)}
         >
           <input
             type="file"
