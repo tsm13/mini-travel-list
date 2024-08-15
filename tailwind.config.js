@@ -1,6 +1,9 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    fontFamily: {
+      sans: "Quicksand, sans-serif",
+    },
     screens: {
       sm: "760px",
       // => @media (min-width: 576px) { ... }
@@ -31,11 +34,3 @@ export default {
   },
   plugins: [],
 };
-
-// module.exports = {
-//   content: ["./src/**/*.{html,js}"],
-//   theme: {
-//     extend: {},
-//   },
-//   plugins: [],
-// };

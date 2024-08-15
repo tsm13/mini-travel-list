@@ -1,11 +1,11 @@
 import { useState } from "react";
+import Box from "./components/Box";
+import Button from "./components/Button";
+import Header from "./components/Header";
+import List from "./components/List";
 import { useContent } from "./context/ListContext";
 import { ListActionType } from "./enums/listActionType";
 import { Item } from "./interfaces/item";
-import Box from "./components/Box";
-import List from "./components/List";
-import Button from "./components/Button";
-import Header from "./components/Header";
 
 function App() {
   const { listToOrganize, listReady, dispatch, setList } = useContent();
@@ -33,7 +33,7 @@ function App() {
     <>
       <Header isNavOpen={isNavOpen} onSetIsNavOpen={setIsNavOpen} />
       <main
-        className={`sm:px-8 grid place-content-center text-sm ${
+        className={`sm:px-8 text-slate-100 grid place-content-center text-sm ${
           isNavOpen && "blur-sm"
         }`}
       >

@@ -1,14 +1,14 @@
 import { ChangeEvent, useState } from "react";
+import { FaFileDownload, FaFileUpload, FaTrashAlt } from "react-icons/fa";
 import { useContent } from "../context/ListContext";
 import { ListActionType } from "../enums/listActionType";
 import { Item } from "../interfaces/item";
-import { FaFileDownload, FaFileUpload, FaTrashAlt } from "react-icons/fa";
 
 export default function Navigation({
-  direction,
+  isNavOpen,
   setIsNavOpen,
 }: {
-  direction: "horizontal" | "vertical";
+  isNavOpen: boolean;
   setIsNavOpen: (isNavOpen: boolean) => void;
 }) {
   const { dispatch, list, setList } = useContent();
@@ -35,7 +35,10 @@ export default function Navigation({
   async function parseJsonFile(file: File) {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
-      fileReader.onload = (event) => resolve(JSON.parse(event.target.result));
+      fileReader.onload = (event) => {
+        if (!event.target) return;
+        resolve(JSON.parse(event.target.result) as string);
+      };
       fileReader.onerror = (error) => reject(error);
       fileReader.readAsText(file);
     });
@@ -63,7 +66,7 @@ export default function Navigation({
   return (
     <ul
       className={`md:flex md:flex-1 md:justify-center md:gap-8 md:items-center text-lg uppercase font-semibold gap-6 ${
-        direction === "vertical"
+        isNavOpen
           ? "bg-slate-500 flex flex-col h-auto w-full absolute z-10 left-0 top-16 border-b-[1px] pb-6 pt-4 px-6"
           : "hidden"
       }`}
