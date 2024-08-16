@@ -2,7 +2,7 @@
 
 ![Main Image](public/screenshots/desktop01.png)
 
-🇬🇧 A minimalist (and self-indulgent) little project built mainly for personal use, and to practice state management in React and Tailwind. This app works entirely locally, as data is stored in the browser's local storage, and includes options to export and import the list file in JSON format.
+🇬🇧 A minimalist (and self-indulgent) little project built mainly for personal use, and to practice state management in React, and styling with Tailwind. This app works entirely locally, as data is stored in the browser's local storage, and includes options to export and import the list file in JSON format.
 
 The app workflow is as such:
 
@@ -14,6 +14,8 @@ The app workflow is as such:
 The logic behind how this app works was born from a minor pain point for me whenever I made my own lists for short trips. All the things I carry with me are goods I unpack to use during my stay, then stuff those back into my bag once the trip is over.
 
 I'm aware of the many sophisticated and excellent travel packing apps out in the wild, but I wanted to take my own approach to what I consider the solution to my problem. And, of course, it's also a good excuse to practice my problem-solving and coding skills.
+
+##
 
 🇧🇷 Lista de viagem minimalista construída mais para fins pessoais, e também para praticar gerenciamento de estado com React e Tailwind. Funciona de forma totalmente local, pois os dados são armazenados no local storage do navegador, com opção de importar ou exportar a lista para arquivo no formato JSON.
 
