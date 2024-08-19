@@ -8,7 +8,7 @@ import { ListActionType } from "./enums/listActionType";
 import { Item } from "./interfaces/item";
 
 function App() {
-  const { listToOrganize, listReady, dispatch, setList } = useContent();
+  const { listToOrganize, listReady, dispatch, setList, t } = useContent();
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   const handleToggleAllReady = () => {
@@ -41,13 +41,13 @@ function App() {
           <Box title="Organize">
             <List list={listToOrganize} />
             <Button onClick={handleToggleAllReady} size="medium">
-              Toggle All Ready
+              {t("listFunctions.toggleReady")}
             </Button>
           </Box>
           <Box title="Ready">
             <List list={listReady} />
             <Button onClick={handleResetAllReady} size="medium">
-              Reset All Ready
+              {t("listFunctions.resetReady")}
             </Button>
           </Box>
         </div>

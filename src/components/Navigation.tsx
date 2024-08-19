@@ -1,8 +1,14 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { FaFileDownload, FaFileUpload, FaTrashAlt } from "react-icons/fa";
+import {
+  FaFileDownload,
+  FaFileUpload,
+  FaGithub,
+  FaTrashAlt,
+} from "react-icons/fa";
 import { useContent } from "../context/ListContext";
 import { ListActionType } from "../enums/listActionType";
 import { Item } from "../interfaces/item";
+import Button from "./Button";
 
 export default function Navigation({
   isNavOpen,
@@ -11,7 +17,7 @@ export default function Navigation({
   isNavOpen: boolean;
   setIsNavOpen: (isNavOpen: boolean) => void;
 }) {
-  const { dispatch, list, setList } = useContent();
+  const { dispatch, list, setList, t, i18n } = useContent();
   const [file, setFile] = useState<File>();
 
   const handleClearList = () => {
@@ -70,6 +76,12 @@ export default function Navigation({
     setFile(e.target.files[0]);
   };
 
+  const changeLanguage = () => {
+    i18n.language !== "pt-BR"
+      ? i18n.changeLanguage("pt-BR")
+      : i18n.changeLanguage("en-US");
+  };
+
   return (
     <ul
       className={`md:flex md:flex-1 md:justify-center md:gap-8 md:items-center text-lg uppercase font-semibold gap-6 ${
@@ -91,7 +103,7 @@ export default function Navigation({
           />
           <button type="submit" className="uppercase">
             <span className="flex items-center gap-2">
-              <FaFileDownload /> Load List
+              <FaFileDownload /> {t("headerOptions.load")}
             </span>
           </button>
         </form>
@@ -103,7 +115,7 @@ export default function Navigation({
         className="hover:text-accent-400"
       >
         <span className="flex items-center gap-2">
-          <FaFileUpload /> Export list
+          <FaFileUpload /> {t("headerOptions.export")}
         </span>
       </li>
 
@@ -114,9 +126,25 @@ export default function Navigation({
       >
         <span className="flex items-center gap-2">
           <FaTrashAlt />
-          Clear list
+          {t("headerOptions.clear")}
         </span>
       </li>
+
+      <div>
+        <Button size="textLanguage" onClick={changeLanguage}>
+          <span className="text-sm uppercase">
+            {t("headerOptions.changeLanguage")}
+          </span>
+        </Button>
+        <a
+          href="https://github.com/tsm13/mini-travel-list"
+          className="hover:text-accent-400 text-sm"
+        >
+          <span className="flex items-center gap-2 ">
+            <FaGithub /> {t("headerOptions.github")}
+          </span>
+        </a>
+      </div>
     </ul>
   );
 }

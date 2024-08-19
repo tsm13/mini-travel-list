@@ -5,7 +5,7 @@ import { Item } from "../interfaces/item";
 import Button from "./Button";
 
 export default function AddItem() {
-  const { dispatch, setList } = useContent();
+  const { dispatch, setList, t } = useContent();
   const [inputValue, setInputValue] = useState("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -29,9 +29,9 @@ export default function AddItem() {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           className="rounded bg-slate-700 px-3 h-8 flex-1 focus:outline-none focus:ring focus:ring-accent-600 focus:ring-offset-1"
-          placeholder="Enter item name here"
+          placeholder={t("listFunctions.enter")}
         ></input>
-        <Button size="small">Add</Button>
+        <Button size="small">{t("listFunctions.add")}</Button>
       </div>
     </form>
   );

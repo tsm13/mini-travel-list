@@ -2,6 +2,8 @@ import { createContext, Dispatch, useContext, useReducer } from "react";
 import { useLocalStorageState } from "../hooks/useLocalStorage";
 import { Item } from "../interfaces/item";
 import { ListActionType } from "../enums/listActionType";
+import { useTranslation } from "react-i18next";
+import { i18n, TFunction } from "i18next";
 
 interface Lists {
   listToOrganize: Item[] | [];
@@ -162,6 +164,8 @@ interface ContextProps {
   dispatch: Dispatch<Actions>;
   list: Item[];
   setList: (item: unknown) => void;
+  t: TFunction<"translation", undefined>;
+  i18n: i18n;
 }
 
 const ContentContext = createContext<ContextProps>({} as ContextProps);
@@ -172,6 +176,7 @@ function ContentProvider({ children }: { children: React.ReactElement }) {
     initialState
   );
   const [list, setList] = useLocalStorageState([] as Item[], "list");
+  const { t, i18n } = useTranslation();
   return (
     <ContentContext.Provider
       value={{
@@ -180,6 +185,8 @@ function ContentProvider({ children }: { children: React.ReactElement }) {
         dispatch,
         list,
         setList,
+        t,
+        i18n,
       }}
     >
       {children}

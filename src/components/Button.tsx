@@ -1,7 +1,13 @@
 interface Props {
   children: React.ReactNode;
   onClick?: () => void;
-  size: "small" | "medium" | "large" | "smallBlack" | "smallRed";
+  size:
+    | "small"
+    | "medium"
+    | "large"
+    | "smallBlack"
+    | "smallRed"
+    | "text-language";
 }
 
 export default function Button({ children, onClick, size }: Props) {
@@ -19,6 +25,7 @@ export default function Button({ children, onClick, size }: Props) {
     smallRed:
       baseSmall +
       " text-slate-950 text-sm bg-red-500 active:bg-red-600 font-bold",
+    "text-language": "hover:text-accent-400",
   };
 
   return (
