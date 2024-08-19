@@ -7,12 +7,12 @@ i18next
   .use(i18nextBrowserLanguagedetector)
   // passing the i18n instance to react-i18next
   .use(initReactI18next)
-  // initializes i18next with the specified config
+  // initializes i18next
   .init({
-    debug: true,
-    fallbackLng: ["en-US", "pt-BR"],
+    debug: false,
+    fallbackLng: ["en", "pt-BR"],
     resources: {
-      "en-US": {
+      en: {
         translation: {
           listTitle: {
             organize: "Organize",
@@ -22,7 +22,7 @@ i18next
             load: "Load list",
             export: "Export list",
             clear: "Clear list",
-            changeLanguage: "🇧🇷  Em Português",
+            changeLanguage: "Em Português",
             github: "Source Code",
           },
           listFunctions: {
@@ -45,7 +45,7 @@ i18next
             load: "Importar lista",
             export: "Exportar lista",
             clear: "Apagar lista",
-            changeLanguage: "🇬🇧  In English",
+            changeLanguage: "In English",
             github: "Código fonte",
           },
           listFunctions: {

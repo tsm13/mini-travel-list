@@ -4,7 +4,7 @@
 
 ### 🇬🇧 About this app:
 
-A minimalist (and self-indulgent) little project built mainly for personal use, and to practice state management in React, styling with Tailwind and i18n with the i18nnext. This app works entirely locally, as data is stored in the browser's local storage, and includes options to export and import the list file in JSON format.
+A minimalist (and self-indulgent) little project built mainly for personal use, and to practice state management in React, styling with Tailwind and basic i18n with i18next. This app works entirely locally, as data is stored in the browser's local storage, and includes options to export and import the list file in JSON format.
 
 The app workflow is as such:
 
@@ -19,7 +19,7 @@ I'm aware of the many sophisticated and excellent travel packing apps out in the
 
 ### 🇧🇷 Sobre o app:
 
-Lista de viagem minimalista construída mais para fins pessoais, e também para praticar gerenciamento de estado com React, e estilos com Tailwind. Funciona de forma totalmente local, pois os dados são armazenados no local storage do navegador, com opção de importar ou exportar a lista para arquivo no formato JSON.
+Lista de viagem minimalista construída mais para fins pessoais, e também para praticar gerenciamento de estado com React, estilos com Tailwind, e o básico de i18n com i18next. Funciona de forma totalmente local, pois os dados são armazenados no local storage do navegador, com opção de importar ou exportar a lista para arquivo no formato JSON.
 
 O workflow do app é assim:
 
@@ -38,11 +38,13 @@ Sei que existem vários apps excelentes e mais sofisticados voltados para esse m
 
 ## Features
 
+- Bilingual app: English and Portuguese interface — per my first user's (aka my mom) demands! 😅
 - Local Storage: data is stored locally in the browser
 - Option to export/import list to/from a json file
 - Updatable item quantity
 - Responsive layout
 
+![Main Image](public/screenshots/desktop02.png)
 ![Screenshot](public/screenshots/mobile01.png)
 ![Screenshot](public/screenshots/mobile02.png)
 
@@ -51,5 +53,6 @@ Sei que existem vários apps excelentes e mais sofisticados voltados para esse m
 - React
 - TypeScript
 - Context API + useReducer
+- i18next for React
 - Custom Hooks
 - Tailwind CSS

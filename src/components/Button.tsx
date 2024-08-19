@@ -25,7 +25,7 @@ export default function Button({ children, onClick, size }: Props) {
     smallRed:
       baseSmall +
       " text-slate-950 text-sm bg-red-500 active:bg-red-600 font-bold",
-    textLanguage: "hover:text-accent-400",
+    textLanguage: " hover:text-accent-400",
   };
 
   return (

@@ -9,6 +9,8 @@ import { useContent } from "../context/ListContext";
 import { ListActionType } from "../enums/listActionType";
 import { Item } from "../interfaces/item";
 import Button from "./Button";
+import brFlag from "../../public/br-flag.png";
+import ukFlag from "../../public/uk-flag.png";
 
 export default function Navigation({
   isNavOpen,
@@ -79,7 +81,7 @@ export default function Navigation({
   const changeLanguage = () => {
     i18n.language !== "pt-BR"
       ? i18n.changeLanguage("pt-BR")
-      : i18n.changeLanguage("en-US");
+      : i18n.changeLanguage("en");
   };
 
   return (
@@ -120,28 +122,32 @@ export default function Navigation({
           </span>
         </li>
 
-        <li
-          role="button"
-          onClick={handleClearList}
-          className="md:pb-0 hover:text-accent-400 pb-4"
-        >
+        <li role="button" onClick={handleClearList} className="md:pb-0 pb-4">
           <span className="flex items-center gap-2">
             <FaTrashAlt />
-            {t("headerOptions.clear")}
+            <span className="hover:text-accent-400">
+              {t("headerOptions.clear")}
+            </span>
           </span>
         </li>
 
-        <li className="md:ml-auto md:gap-1 md:text-sm flex flex-col items-start gap-4 text-base font-semibold normal-case">
+        <li className="md:ml-auto md:gap-1 md:text-sm flex flex-col items-start gap-4 font-semibold normal-case">
           <Button size="textLanguage" onClick={changeLanguage}>
+            <img
+              src={i18n.language !== "pt-BR" ? brFlag : ukFlag}
+              alt="Country Flag"
+              className="md:w-[14px] md:h-[14px] w-4 h-4 inline-block mr-2"
+            />
             <span className="">{t("headerOptions.changeLanguage")}</span>
           </Button>
-          <a
-            href="https://github.com/tsm13/mini-travel-list"
-            className="hover:text-accent-400"
-          >
-            <span className="flex items-center gap-2 ">
-              <FaGithub /> {t("headerOptions.github")}
-            </span>
+
+          <a href="https://github.com/tsm13/mini-travel-list">
+            <div className="flex items-center gap-2">
+              <FaGithub />
+              <span className="hover:text-accent-400">
+                {t("headerOptions.github")}
+              </span>
+            </div>
           </a>
         </li>
       </ul>
