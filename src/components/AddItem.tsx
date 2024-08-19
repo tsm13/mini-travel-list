@@ -28,7 +28,7 @@ export default function AddItem() {
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          className="rounded bg-slate-700 px-3 h-8 flex-1 focus:outline-none focus:ring focus:ring-accent-600 focus:ring-offset-1"
+          className="rounded bg-slate-700 px-3 h-8 flex-1 focus:outline-none focus:ring focus:ring-accent-600 focus:ring-offset-1 max-w-[155px]"
           placeholder={t("listFunctions.enter")}
         ></input>
         <Button size="small">{t("listFunctions.add")}</Button>

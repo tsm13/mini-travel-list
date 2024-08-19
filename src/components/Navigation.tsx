@@ -83,68 +83,68 @@ export default function Navigation({
   };
 
   return (
-    <ul
-      className={`md:flex md:flex-1 md:justify-center md:gap-8 md:items-center text-lg uppercase font-semibold gap-6 ${
-        isNavOpen
-          ? "bg-slate-500 flex flex-col h-auto w-full absolute z-10 left-0 top-16 border-b-[1px] pb-6 pt-4 px-6"
-          : "hidden"
-      }`}
-    >
-      <li className="hover:text-accent-400">
-        <form
-          className="md:py-4 md:flex-row md:gap-6 md:w-full flex flex-row-reverse justify-end items-center font-base gap-4 flex-wrap"
-          onSubmit={(e) => handleImportJSON(e)}
+    <>
+      <ul
+        className={`md:flex md:flex-1 md:justify-center md:gap-8 md:items-center text-lg uppercase font-semibold gap-6 ${
+          isNavOpen
+            ? "bg-slate-500 flex flex-col h-auto w-full absolute z-10 left-0 top-16 border-b-[1px] pb-8 pt-4 px-6"
+            : "hidden"
+        }`}
+      >
+        <li className="md:ml-auto hover:text-accent-400">
+          <form
+            className="md:py-4 md:flex-row md:gap-6 md:w-full flex flex-col gap-4"
+            onSubmit={(e) => handleImportJSON(e)}
+          >
+            <input
+              type="file"
+              accept=".json"
+              onChange={handleChange}
+              className="text-base font-normal max-w-[200px]"
+            />
+            <button type="submit" className="uppercase">
+              <span className="flex items-center gap-2">
+                <FaFileDownload /> {t("headerOptions.load")}
+              </span>
+            </button>
+          </form>
+        </li>
+
+        <li
+          role="button"
+          onClick={handleExportToJSON}
+          className="hover:text-accent-400"
         >
-          <input
-            type="file"
-            accept=".json"
-            onChange={handleChange}
-            className="text-base font-normal max-w-[200px]"
-          />
-          <button type="submit" className="uppercase">
-            <span className="flex items-center gap-2">
-              <FaFileDownload /> {t("headerOptions.load")}
+          <span className="flex items-center gap-2">
+            <FaFileUpload /> {t("headerOptions.export")}
+          </span>
+        </li>
+
+        <li
+          role="button"
+          onClick={handleClearList}
+          className="md:pb-0 hover:text-accent-400 pb-4"
+        >
+          <span className="flex items-center gap-2">
+            <FaTrashAlt />
+            {t("headerOptions.clear")}
+          </span>
+        </li>
+
+        <li className="md:ml-auto md:gap-1 md:text-sm flex flex-col items-start gap-4 text-base font-semibold normal-case">
+          <Button size="textLanguage" onClick={changeLanguage}>
+            <span className="">{t("headerOptions.changeLanguage")}</span>
+          </Button>
+          <a
+            href="https://github.com/tsm13/mini-travel-list"
+            className="hover:text-accent-400"
+          >
+            <span className="flex items-center gap-2 ">
+              <FaGithub /> {t("headerOptions.github")}
             </span>
-          </button>
-        </form>
-      </li>
-
-      <li
-        role="button"
-        onClick={handleExportToJSON}
-        className="hover:text-accent-400"
-      >
-        <span className="flex items-center gap-2">
-          <FaFileUpload /> {t("headerOptions.export")}
-        </span>
-      </li>
-
-      <li
-        role="button"
-        onClick={handleClearList}
-        className="hover:text-accent-400"
-      >
-        <span className="flex items-center gap-2">
-          <FaTrashAlt />
-          {t("headerOptions.clear")}
-        </span>
-      </li>
-
-      <div>
-        <Button size="textLanguage" onClick={changeLanguage}>
-          <span className="text-sm uppercase">
-            {t("headerOptions.changeLanguage")}
-          </span>
-        </Button>
-        <a
-          href="https://github.com/tsm13/mini-travel-list"
-          className="hover:text-accent-400 text-sm"
-        >
-          <span className="flex items-center gap-2 ">
-            <FaGithub /> {t("headerOptions.github")}
-          </span>
-        </a>
-      </div>
-    </ul>
+          </a>
+        </li>
+      </ul>
+    </>
   );
 }

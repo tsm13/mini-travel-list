@@ -4,7 +4,7 @@
 
 ### 🇬🇧 About this app:
 
-A minimalist (and self-indulgent) little project built mainly for personal use, and to practice state management in React, and styling with Tailwind. This app works entirely locally, as data is stored in the browser's local storage, and includes options to export and import the list file in JSON format.
+A minimalist (and self-indulgent) little project built mainly for personal use, and to practice state management in React, styling with Tailwind and i18n with the i18nnext. This app works entirely locally, as data is stored in the browser's local storage, and includes options to export and import the list file in JSON format.
 
 The app workflow is as such:
 
