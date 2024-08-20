@@ -122,12 +122,14 @@ export default function Navigation({
           </span>
         </li>
 
-        <li role="button" onClick={handleClearList} className="md:pb-0 pb-4">
+        <li
+          role="button"
+          onClick={handleClearList}
+          className="md:pb-0 pb-4 hover:text-accent-400"
+        >
           <span className="flex items-center gap-2">
             <FaTrashAlt />
-            <span className="hover:text-accent-400">
-              {t("headerOptions.clear")}
-            </span>
+            {t("headerOptions.clear")}
           </span>
         </li>
 
@@ -138,7 +140,7 @@ export default function Navigation({
               alt="Country Flag"
               className="md:w-[14px] md:h-[14px] w-4 h-4 inline-block mr-2"
             />
-            <span className="">{t("headerOptions.changeLanguage")}</span>
+            {t("headerOptions.changeLanguage")}
           </Button>
 
           <a href="https://github.com/tsm13/mini-travel-list">
