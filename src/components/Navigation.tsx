@@ -9,8 +9,8 @@ import { useContent } from "../context/ListContext";
 import { ListActionType } from "../enums/listActionType";
 import { Item } from "../interfaces/item";
 import Button from "./Button";
-import brFlag from "../../public/br-flag.png";
-import ukFlag from "../../public/uk-flag.png";
+import brFlag from "../images/br-flag.png";
+import ukFlag from "../images/uk-flag.png";
 
 export default function Navigation({
   isNavOpen,
