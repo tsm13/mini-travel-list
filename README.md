@@ -4,7 +4,7 @@
 
 ### 🇬🇧 About this app:
 
-A minimalist (and self-indulgent) little Progressive Web Application project built mainly for personal use, and to practice state management in React, styling with Tailwind and basic i18n with i18next. The app requires internet connection, but works entirely locally, as data is stored in the browser's local storage. It also includes options to export and import the list file in JSON format.
+A minimalist (and self-indulgent) little Progressive Web Application project built mainly for personal use, and to practice state management in React, styling with Tailwind and basic i18n with i18next. The app works entirely locally, as data is stored in the browser's local storage. It also includes options to export and import the list file in JSON format.
 
 App workflow:
 
@@ -19,7 +19,7 @@ I'm aware of the many sophisticated and excellent travel packing apps out in the
 
 ### 🇧🇷 Sobre o app:
 
-Progressive Web Application de lista de viagem minimalista construída mais para fins pessoais, e também para praticar gerenciamento de estado com React, estilos com Tailwind, e o básico de i18n com i18next. O app requer conexão com a internet, mas funciona de forma totalmente local, pois os dados são armazenados no armazenamento local do navegador. E também conta com opção de importar ou exportar a lista para arquivo no formato JSON.
+Progressive Web Application de lista de viagem minimalista construída mais para fins pessoais, e também para praticar gerenciamento de estado com React, estilos com Tailwind, e o básico de i18n com i18next. O app funciona de forma totalmente local, pois os dados são armazenados no armazenamento local do navegador. E também conta com opção de importar ou exportar a lista para arquivo no formato JSON.
 
 Workflow do app:
 
