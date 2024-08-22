@@ -4,9 +4,9 @@
 
 ### 🇬🇧 About this app:
 
-A minimalist (and self-indulgent) little project built mainly for personal use, and to practice state management in React, styling with Tailwind and basic i18n with i18next. This app works entirely locally, as data is stored in the browser's local storage, and includes options to export and import the list file in JSON format.
+A minimalist (and self-indulgent) little Progressive Web Application project built mainly for personal use, and to practice state management in React, styling with Tailwind and basic i18n with i18next. The app requires internet connection, but works entirely locally, as data is stored in the browser's local storage. It also includes options to export and import the list file in JSON format.
 
-The app workflow is as such:
+App workflow:
 
 1. Add items by entering their names in the input field of the "Organize" list. This will mark the item as to be organized.
 2. Click on the item to mark it as ready, which will push it to the "Ready" list.
@@ -19,9 +19,9 @@ I'm aware of the many sophisticated and excellent travel packing apps out in the
 
 ### 🇧🇷 Sobre o app:
 
-Lista de viagem minimalista construída mais para fins pessoais, e também para praticar gerenciamento de estado com React, estilos com Tailwind, e o básico de i18n com i18next. Funciona de forma totalmente local, pois os dados são armazenados no local storage do navegador, com opção de importar ou exportar a lista para arquivo no formato JSON.
+Progressive Web Application de lista de viagem minimalista construída mais para fins pessoais, e também para praticar gerenciamento de estado com React, estilos com Tailwind, e o básico de i18n com i18next. O app requer conexão com a internet, mas funciona de forma totalmente local, pois os dados são armazenados no armazenamento local do navegador. E também conta com opção de importar ou exportar a lista para arquivo no formato JSON.
 
-O workflow do app é assim:
+Workflow do app:
 
 1. Adicione itens escrevendo o nome na caixa de texto dentro da lista "Organize". Fazendo isso, o item será adicionado na lista de itens ainda não guardados na mala.
 2. Apertando em cima do nome do item nessa primeira lista irá jogar o item na segunda lista, "Ready", marcando o mesmo como pronto.
